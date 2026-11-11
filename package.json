@@ -1,0 +1,25 @@
+{
+  "name": "flow-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "comments": {
+    "why-root-deps": "Two packages are pinned here purely to control npm's hoisting across the web and native workspaces. Neither is used by the root itself.",
+    "tailwindcss": "The web app needs v4 and the native app needs v3 for NativeWind. Claiming the root for v4 means the hoisted @tailwindcss/postcss resolves v4, and v3 nests under apps/native. Without this npm gives the root slot to v3 and the web build fails in globals.css.",
+    "next": "eslint-config-next hoists to the root but next nests under apps/web, so the config cannot resolve next/dist/compiled/babel/eslint-parser and linting dies. Keeping next at the root fixes resolution. Must stay in step with the version in apps/web."
+  },
+  "devDependencies": {
+    "next": "16.3.1",
+    "tailwindcss": "^4"
+  },
+  "scripts": {
+    "web": "npm run dev --workspace=@flow/web",
+    "web:build": "npm run build --workspace=@flow/web",
+    "native": "npm run start --workspace=@flow/native",
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present"
+  }
+}

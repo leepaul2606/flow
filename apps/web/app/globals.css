@@ -1,0 +1,214 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------
+   Flow design tokens
+   Derived from the V1 mocks: warm off-white ground, gold gradient
+   accent, near-black ink, high-contrast Didone for money values.
+   --------------------------------------------------------------- */
+@theme {
+  /* Ground + surfaces */
+  --color-ground: #f4f2ee;
+  --color-surface: #faf9f7;
+  --color-surface-raised: #ffffff;
+  --color-hairline: #e7e3dc;
+
+  /* Ink */
+  --color-ink: #0f0f0f;
+  --color-ink-muted: #6e6e6e;
+  --color-ink-faint: #9a9a9a;
+
+  /* Gold accent */
+  --color-gold: #c08a2e;
+  --color-gold-bright: #d8b674;
+  --color-gold-deep: #b3822f;
+  --color-gold-wash: #f0e7d5;
+
+  /* Card */
+  --color-card-black: #0c0c0c;
+
+  /* Semantic */
+  --color-positive: #1fa463;
+  --color-positive-wash: #d8efe1;
+  --color-negative: #c0392b;
+  --color-warning: #c08a2e;
+  --color-warning-wash: #f7ecd6;
+
+  /* Type */
+  --font-display: var(--font-playfair), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+
+  /* Radii matched to the mocks */
+  --radius-field: 14px;
+  --radius-panel: 20px;
+  --radius-card: 24px;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-ground);
+    /* Prevent iOS text auto-zoom in standalone mode */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ground);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    /* Disable overscroll bounce so it feels native when installed */
+    overscroll-behavior-y: none;
+  }
+
+  /* Money and headline values use the Didone face */
+  .font-display {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  /* Tap targets shouldn't flash blue on iOS */
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Inputs must be >=16px or iOS zooms the viewport on focus */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Welcome intro
+   A champagne stream draws the wordmark left to right, a light head
+   rides the stroke, one shimmer passes, the logo settles, then the
+   copy rises in sequence. 2.4s end to end.
+   Geometry is authored against a 192x78 wordmark.
+   --------------------------------------------------------------- */
+@keyframes flow-clip {
+  from { width: 0; }
+  to   { width: 214px; }
+}
+
+@keyframes flow-head {
+  0%   { transform: translate(-16px, 4px) scale(0.7); opacity: 0; }
+  7%   { opacity: 1; }
+  24%  { transform: translate(26px, 30px) scale(1); }
+  36%  { transform: translate(58px, 48px) scale(1); }
+  43%  { transform: translate(88px, 20px) scale(0.95); }
+  50%  { transform: translate(114px, 44px) scale(0.95); }
+  57%  { transform: translate(90px, 68px) scale(0.95); }
+  64%  { transform: translate(66px, 44px) scale(0.95); }
+  71%  { transform: translate(104px, 26px) scale(1); }
+  88%  { transform: translate(164px, 44px) scale(1); opacity: 1; }
+  100% { transform: translate(200px, 16px) scale(0.6); opacity: 0; }
+}
+
+@keyframes flow-shimmer {
+  from { transform: translateX(-125%); }
+  to   { transform: translateX(125%); }
+}
+
+@keyframes flow-settle {
+  from { transform: translateY(26px) scale(1.055); }
+  to   { transform: translateY(0) scale(1); }
+}
+
+@keyframes flow-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes flow-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* The hero card arrives from slightly further out and settles into its
+   resting tilt — one orchestrated entrance, not a set of scattered effects */
+@keyframes flow-card-in {
+  from {
+    opacity: 0;
+    transform: translateX(28px) rotate(-11deg) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) rotate(var(--card-rest, -6deg)) scale(1);
+  }
+}
+
+@layer utilities {
+  /* A page-load sequence is decorative. Anyone who has asked for less motion
+     gets the finished hero immediately. */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-enter,
+    .hero-enter * {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* The intro is decorative. Anyone who has asked for less motion gets the
+     finished screen immediately rather than a 2.4s wait. */
+  @media (prefers-reduced-motion: reduce) {
+    .flow-intro,
+    .flow-intro * {
+      animation: none !important;
+      width: auto !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Safe-area helpers for installed/standalone display */
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .min-h-screen-safe {
+    min-height: 100dvh;
+  }
+
+  /* The signature gold button/pill fill */
+  .bg-gold-gradient {
+    background-image: linear-gradient(
+      135deg,
+      var(--color-gold-bright) 0%,
+      #cfa254 45%,
+      var(--color-gold-deep) 100%
+    );
+  }
+
+  /* The black card face with its gold arc */
+  .bg-card-face {
+    background-color: var(--color-card-black);
+    background-image:
+      radial-gradient(
+        120% 90% at 78% 18%,
+        rgba(255, 255, 255, 0.07) 0%,
+        transparent 60%
+      ),
+      linear-gradient(160deg, #171717 0%, #0a0a0a 55%, #050505 100%);
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Numeric alignment for balances and transaction amounts */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "expo": {
+    "name": "Flow",
+    "slug": "flow",
+    "scheme": "flow",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "backgroundColor": "#f4f2ee",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#f4f2ee"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "app.flowcard.flow",
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "Flow uses Face ID to unlock your account and approve payments.",
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "app.flowcard.flow",
+      "adaptiveIcon": {
+        "backgroundColor": "#f4f2ee",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      "expo-image",
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Flow uses Face ID to unlock your account and approve payments."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
