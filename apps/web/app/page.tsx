@@ -322,7 +322,13 @@ export default function LandingPage() {
       <footer className="border-t border-hairline">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-10 text-[14px] text-ink-faint md:flex-row md:items-center md:justify-between">
           <p>Flow · Dubai card programme</p>
-          <div className="flex gap-6">
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
+            <a
+              href="mailto:hello@yourflowcard.com"
+              className="hover:text-ink-muted"
+            >
+              hello@yourflowcard.com
+            </a>
             <Link href="/legal/terms" className="hover:text-ink-muted">
               Terms
             </Link>
