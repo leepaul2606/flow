@@ -4,6 +4,8 @@ import type { Metadata } from "next";
 
 import { DesignCarousel } from "@/components/flow/design-carousel";
 import { FlowLogo } from "@/components/flow/flow-logo";
+import { Reveal } from "@/components/flow/reveal";
+import { TiltCard } from "@/components/flow/tilt-card";
 import { Icon } from "@/components/ui/icon";
 import { CARD_DESIGNS } from "@flow/core";
 import { cardArtworkUrl } from "@/lib/card-artwork";
@@ -142,7 +144,7 @@ export default function LandingPage() {
   const hero = CARD_DESIGNS.obsidian_gold;
 
   return (
-    <main className="min-h-screen-safe overflow-x-clip bg-ground">
+    <main className="page-ground min-h-screen-safe overflow-x-clip">
       {/* Header ------------------------------------------------------- */}
       <header className="mx-auto flex max-w-6xl items-center justify-between px-6 pt-safe">
         <div className="py-6">
@@ -202,121 +204,131 @@ export default function LandingPage() {
               style={{ animation: "flow-fade 900ms ease-out 240ms both" }}
               aria-hidden="true"
             />
-            <div
-              className="relative mx-auto w-full max-w-[400px] overflow-hidden rounded-[var(--radius-card)] shadow-[0_40px_70px_-20px_rgba(0,0,0,0.45)]"
-              style={{
-                // The resting tilt lives in a variable so the keyframe can
-                // land on it rather than duplicating the value
-                ["--card-rest" as string]: "-4deg",
-                animation:
-                  "flow-card-in 1100ms cubic-bezier(0.22,0.68,0,1) 120ms both",
-              }}
-            >
-              <Image
-                src={cardArtworkUrl(hero)}
-                alt="The Flow card, in Obsidian Gold"
-                width={1578}
-                height={996}
-                priority
-                className="h-auto w-full"
-              />
-            </div>
+            <TiltCard>
+              <div
+                className="relative mx-auto w-full max-w-[400px] overflow-hidden rounded-[var(--radius-card)] shadow-[0_40px_70px_-20px_rgba(0,0,0,0.45)]"
+                style={{
+                  // The resting tilt lives in a variable so the keyframe can
+                  // land on it rather than duplicating the value
+                  ["--card-rest" as string]: "-4deg",
+                  animation:
+                    "flow-card-in 1100ms cubic-bezier(0.22,0.68,0,1) 120ms both",
+                }}
+              >
+                <Image
+                  src={cardArtworkUrl(hero)}
+                  alt="The Flow card, in Obsidian Gold"
+                  width={1578}
+                  height={996}
+                  priority
+                  className="h-auto w-full"
+                />
+              </div>
+            </TiltCard>
           </div>
         </div>
       </section>
 
       {/* Pillars — hairline columns, no badges ------------------------ */}
-      <section className="border-t border-hairline">
-        <div className="mx-auto grid max-w-6xl px-6 md:grid-cols-3">
-          {PILLARS.map((p, i) => (
-            <div
-              key={p.title}
-              className={`py-12 md:py-16 ${
-                i > 0
-                  ? "border-t border-hairline md:border-l md:border-t-0 md:pl-10"
-                  : "md:pr-10"
-              } ${i === 1 ? "md:pr-10" : ""}`}
-            >
-              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gold">
-                {p.kicker}
-              </p>
-              <h2 className="mt-3 font-display text-[23px] leading-tight text-ink">
-                {p.title}
-              </h2>
-              <p className="mt-3 text-[15px] leading-relaxed text-ink-muted">
-                {p.body}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
+      <Reveal>
+        <section className="border-t border-hairline">
+          <div className="mx-auto grid max-w-6xl px-6 md:grid-cols-3">
+            {PILLARS.map((p, i) => (
+              <div
+                key={p.title}
+                className={`py-12 md:py-16 ${
+                  i > 0
+                    ? "border-t border-hairline md:border-l md:border-t-0 md:pl-10"
+                    : "md:pr-10"
+                } ${i === 1 ? "md:pr-10" : ""}`}
+              >
+                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gold">
+                  {p.kicker}
+                </p>
+                <h2 className="mt-3 font-display text-[23px] leading-tight text-ink">
+                  {p.title}
+                </h2>
+                <p className="mt-3 text-[15px] leading-relaxed text-ink-muted">
+                  {p.body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      </Reveal>
 
       {/* Designs — a strip you can push through ----------------------- */}
-      <section className="border-t border-hairline py-16 md:py-24">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="max-w-[34rem]">
-            <h2 className="font-display text-[30px] leading-tight text-ink md:text-[38px]">
-              Six ways to carry it
-            </h2>
-            <p className="mt-4 text-[16px] leading-relaxed text-ink-muted">
-              Choose the face of your card, and change it whenever you like. The
-              look changes. Your balance, limits and details stay exactly where
-              they are.
-            </p>
+      <Reveal>
+        <section className="border-t border-hairline py-16 md:py-24">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="max-w-[34rem]">
+              <h2 className="font-display text-[30px] leading-tight text-ink md:text-[38px]">
+                Six ways to carry it
+              </h2>
+              <p className="mt-4 text-[16px] leading-relaxed text-ink-muted">
+                Choose the face of your card, and change it whenever you like.
+                The look changes. Your balance, limits and details stay exactly
+                where they are.
+              </p>
+            </div>
           </div>
-        </div>
 
-        <div className="mt-12">
-          <DesignCarousel />
-        </div>
-      </section>
+          <div className="mt-12">
+            <DesignCarousel />
+          </div>
+        </section>
+      </Reveal>
 
       {/* How it works — dark band, echoing the card -------------------- */}
-      <section className="bg-card-face text-white">
-        <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
-          <p className="flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.2em] text-gold-bright">
-            <span className="h-px w-8 bg-gold-bright/50" aria-hidden="true" />
-            How it works
-          </p>
+      <Reveal>
+        <section className="bg-card-face text-white">
+          <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
+            <p className="flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.2em] text-gold-bright">
+              <span className="h-px w-8 bg-gold-bright/50" aria-hidden="true" />
+              How it works
+            </p>
 
-          <h2 className="mt-6 max-w-[19rem] text-balance font-display text-[30px] leading-tight md:text-[42px]">
-            How money reaches your card
-          </h2>
+            <h2 className="mt-6 max-w-[19rem] text-balance font-display text-[30px] leading-tight md:text-[42px]">
+              How money reaches your card
+            </h2>
 
-          {/* Numbered because this genuinely is a sequence — each step
-              depends on the one before it */}
-          <ol className="mt-12 grid gap-10 md:grid-cols-3 md:gap-10">
-            {STEPS.map((s) => (
-              <li key={s.n}>
-                <span className="font-display text-[34px] leading-none text-gold-bright">
-                  {s.n}
-                </span>
-                <h3 className="mt-4 text-[18px] font-semibold">{s.title}</h3>
-                <p className="mt-2.5 text-[15px] leading-relaxed text-white/60">
-                  {s.body}
-                </p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
+            {/* Numbered because this genuinely is a sequence — each step
+                depends on the one before it */}
+            <ol className="mt-12 grid gap-10 md:grid-cols-3 md:gap-10">
+              {STEPS.map((s) => (
+                <li key={s.n}>
+                  <span className="font-display text-[34px] leading-none text-gold-bright">
+                    {s.n}
+                  </span>
+                  <h3 className="mt-4 text-[18px] font-semibold">{s.title}</h3>
+                  <p className="mt-2.5 text-[15px] leading-relaxed text-white/60">
+                    {s.body}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+      </Reveal>
 
       {/* Download ----------------------------------------------------- */}
-      <section
-        id="get-the-app"
-        className="mx-auto max-w-6xl scroll-mt-10 px-6 py-20 text-center md:py-28"
-      >
-        <h2 className="mx-auto max-w-[20rem] text-balance font-display text-[32px] leading-tight text-ink md:text-[42px]">
-          Carry it with you.
-        </h2>
-        <p className="mx-auto mt-5 max-w-[28rem] text-[16px] leading-relaxed text-ink-muted">
-          Flow lives on your phone. Your balance, your card and every control,
-          wherever you are.
-        </p>
-        <div className="mt-10">
-          <StoreButtons align="center" />
-        </div>
-      </section>
+      <Reveal>
+        <section
+          id="get-the-app"
+          className="mx-auto max-w-6xl scroll-mt-10 px-6 py-20 text-center md:py-28"
+        >
+          <h2 className="mx-auto max-w-[20rem] text-balance font-display text-[32px] leading-tight text-ink md:text-[42px]">
+            Carry it with you.
+          </h2>
+          <p className="mx-auto mt-5 max-w-[28rem] text-[16px] leading-relaxed text-ink-muted">
+            Flow lives on your phone. Your balance, your card and every control,
+            wherever you are.
+          </p>
+          <div className="mt-10">
+            <StoreButtons align="center" />
+          </div>
+        </section>
+      </Reveal>
 
       {/* Footer ------------------------------------------------------- */}
       <footer className="border-t border-hairline">

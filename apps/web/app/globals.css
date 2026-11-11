@@ -22,6 +22,10 @@
   --color-gold-bright: #d8b674;
   --color-gold-deep: #b3822f;
   --color-gold-wash: #f0e7d5;
+  /* The same wash as channels, so a gradient can fade it out to nothing of
+     its own colour. Fading to the `transparent` keyword instead risks a grey
+     cast on the way out, since that keyword is a transparent black. */
+  --gold-wash-rgb: 240 231 213;
 
   /* Card */
   --color-card-black: #0c0c0c;
@@ -210,5 +214,52 @@
   /* Numeric alignment for balances and transaction amounts */
   .tabular {
     font-variant-numeric: tabular-nums;
+  }
+
+  /* The landing ground, which is otherwise one flat fill top to bottom.
+     A wash of the gold bleeding down from behind the hero, and a fine grain
+     across the whole thing, give it some air. Both are quiet enough to read
+     as paper stock rather than as an effect; if you can point at either of
+     them, they are turned up too far.
+
+     The grain is an inline feTurbulence tile rather than an image file, so
+     it costs no request and cannot arrive late. Its opacity is baked into
+     the SVG because a background layer cannot be faded from CSS. */
+  .page-ground {
+    background-color: var(--color-ground);
+    background-image:
+      url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='200'%20height='200'%3E%3Cfilter%20id='g'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.75'%20numOctaves='3'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20type='saturate'%20values='0'/%3E%3C/filter%3E%3Crect%20width='200'%20height='200'%20filter='url(%23g)'%20opacity='0.05'/%3E%3C/svg%3E"),
+      radial-gradient(
+        120% 62% at 50% -12%,
+        rgb(var(--gold-wash-rgb) / 0.85) 0%,
+        rgb(var(--gold-wash-rgb) / 0) 66%
+      );
+    background-repeat: repeat, no-repeat;
+    background-size:
+      200px 200px,
+      100% 780px;
+  }
+
+  /* Sections lift into place as they are reached. The waiting state is only
+     ever applied by Reveal once its effect has run, so the page is readable
+     with no JS and nothing here can strand content invisible. */
+  [data-reveal="waiting"] {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  [data-reveal="in"] {
+    animation: flow-rise 800ms cubic-bezier(0.32, 0.02, 0.18, 1)
+      var(--reveal-delay, 0ms) both;
+  }
+
+  /* The hero card leaning towards the pointer. The transform stays at rest
+     until TiltCard marks it live, so a touch device never pays for the
+     perspective layer. */
+  [data-tilt="on"] {
+    transform: perspective(1200px) rotateX(var(--tilt-x, 0deg))
+      rotateY(var(--tilt-y, 0deg));
+    transition: transform var(--tilt-ease, 110ms) ease-out;
+    will-change: transform;
   }
 }
