@@ -288,20 +288,43 @@ export default function LandingPage() {
               How it works
             </p>
 
-            <h2 className="mt-6 max-w-[19rem] text-balance font-display text-[30px] leading-tight md:text-[42px]">
-              How money reaches your card
-            </h2>
+            {/* The heading shares the row with a line of support, rather
+                than being squeezed narrow beside half a band of nothing */}
+            <div className="mt-6 grid gap-5 md:grid-cols-[1.08fr_0.92fr] md:items-end md:gap-16">
+              <h2 className="text-balance font-display text-[32px] leading-[1.08] md:text-[46px]">
+                How money reaches your card
+              </h2>
+              <p className="max-w-[26rem] text-[15px] leading-relaxed text-white/55 md:pb-2">
+                It moves the way you already bank. What lands in your Flow
+                balance is ready to spend, anywhere Visa works.
+              </p>
+            </div>
 
             {/* Numbered because this genuinely is a sequence — each step
-                depends on the one before it */}
-            <ol className="mt-12 grid gap-10 md:grid-cols-3 md:gap-10">
-              {STEPS.map((s) => (
-                <li key={s.n}>
-                  <span className="font-display text-[34px] leading-none text-gold-bright">
+                depends on the one before it, so it is drawn as one line with
+                three points on it rather than three notes side by side */}
+            <ol className="relative mt-14 grid gap-12 md:mt-20 md:grid-cols-3 md:gap-10">
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 top-0 hidden h-px bg-white/15 md:block"
+              />
+
+              {STEPS.map((s, i) => (
+                <li
+                  key={s.n}
+                  data-step=""
+                  style={{ ["--step-index" as string]: i }}
+                  className="relative md:pt-12"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="absolute left-0 top-0 hidden size-[7px] -translate-y-1/2 rounded-full bg-gold-bright md:block"
+                  />
+                  <span className="font-display text-[38px] leading-none text-gold-bright md:text-[42px]">
                     {s.n}
                   </span>
                   <h3 className="mt-4 text-[18px] font-semibold">{s.title}</h3>
-                  <p className="mt-2.5 text-[15px] leading-relaxed text-white/60">
+                  <p className="mt-2.5 max-w-[22rem] text-[15px] leading-relaxed text-white/65">
                     {s.body}
                   </p>
                 </li>

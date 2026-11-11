@@ -253,6 +253,15 @@
       var(--reveal-delay, 0ms) both;
   }
 
+  /* The funding steps arrive one after another once their band is reached,
+     so a sequence reads as a sequence. Scoped inside a revealed section on
+     purpose: with no JS, or with reduced motion asked for, data-reveal never
+     becomes "in" and these are simply left alone. */
+  [data-reveal="in"] [data-step] {
+    animation: flow-rise 650ms cubic-bezier(0.32, 0.02, 0.18, 1)
+      calc(var(--step-index, 0) * 130ms + 220ms) both;
+  }
+
   /* The hero card leaning towards the pointer. The transform stays at rest
      until TiltCard marks it live, so a touch device never pays for the
      perspective layer. */
