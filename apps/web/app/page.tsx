@@ -26,40 +26,21 @@ export const metadata: Metadata = {
 const APP_STORE_URL = "";
 const PLAY_STORE_URL = "";
 
-/**
- * The three claims the product rests on.
- *
- * Body carries the claim and `details` the mechanics behind it. Keeping them
- * apart is what stops one column running to five lines while its neighbours
- * run to three, and it gives someone skimming a way in that a dense
- * paragraph never does.
- */
 const PILLARS = [
   {
     kicker: "The card",
     title: "Spend anywhere",
-    body: "A physical Visa card accepted worldwide, funded straight from your balance. No limits imposed on you.",
-    details: [
-      "Set your own limits",
-      "Freeze it in a tap",
-      "Virtual cards for subscriptions",
-    ],
+    body: "A physical Visa card accepted worldwide, funded straight from your balance. No limits imposed on you. Set your own, freeze it in a tap, or issue a virtual card for subscriptions.",
   },
   {
     kicker: "The balance",
     title: "Hold what you choose",
-    body: "Your stablecoins in one place, on the networks you already use.",
-    details: ["Send and receive in the app", "Your choice of network"],
+    body: "Your stablecoins in one place, on the networks you already use. Send and receive without leaving the app.",
   },
   {
     kicker: "The lock",
     title: "Yours alone",
-    body: "Nobody sees your money but you.",
-    details: [
-      "Face ID on open",
-      "Passcode on every card reveal",
-      "Hide balances in a tap",
-    ],
+    body: "Face ID on open, a passcode on every card reveal, and balances you can hide with one tap. Nobody sees your money but you.",
   },
 ];
 
@@ -255,47 +236,21 @@ export default function LandingPage() {
             {PILLARS.map((p, i) => (
               <div
                 key={p.title}
-                className={`group flex flex-col py-14 md:py-20 ${
+                className={`py-12 md:py-16 ${
                   i > 0
                     ? "border-t border-hairline md:border-l md:border-t-0 md:pl-10"
                     : "md:pr-10"
                 } ${i === 1 ? "md:pr-10" : ""}`}
               >
-                {/* The same rule-and-kicker the hero and the dark band use,
-                    so these columns belong to the page rather than sitting
-                    outside its vocabulary */}
-                <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-gold">
-                  <span
-                    aria-hidden="true"
-                    className="h-px w-6 bg-gold/50 transition-[width] duration-500 ease-out group-hover:w-10"
-                  />
+                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gold">
                   {p.kicker}
                 </p>
-
-                <h2 className="mt-4 font-display text-[26px] leading-tight text-ink md:text-[29px]">
+                <h2 className="mt-3 font-display text-[23px] leading-tight text-ink">
                   {p.title}
                 </h2>
-                <p className="mt-3.5 text-[15px] leading-relaxed text-ink-muted">
+                <p className="mt-3 text-[15px] leading-relaxed text-ink-muted">
                   {p.body}
                 </p>
-
-                {/* Pushed to the bottom so the three detail blocks line up
-                    with each other however long the claim above them runs.
-                    Deliberately no rule above it: the claims are different
-                    lengths at every width, so a rule would land at three
-                    different heights and read as a mistake. The dots carry
-                    the change of register on their own. */}
-                <ul className="mt-auto space-y-2.5 pt-8 text-[14px] text-ink-faint">
-                  {p.details.map((detail) => (
-                    <li key={detail} className="flex gap-2.5">
-                      <span
-                        aria-hidden="true"
-                        className="mt-[8px] size-1 shrink-0 rounded-full bg-gold/60"
-                      />
-                      {detail}
-                    </li>
-                  ))}
-                </ul>
               </div>
             ))}
           </div>
