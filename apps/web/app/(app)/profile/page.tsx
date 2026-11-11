@@ -104,7 +104,7 @@ export default function ProfilePage() {
       </Button>
 
       <p className="mt-6 text-center text-[13px] text-ink-faint">
-        Flow V1 · Built for Dubai card programme
+        Flow V1
       </p>
     </Screen>
   );
